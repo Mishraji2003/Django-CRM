@@ -1,11 +1,43 @@
 {% extends 'base.html'%}
 {% block content %}
     
-<div class="col-md-6 offset-md-3">
 {% if user.is_authenticated %}
-<h1>Welcome, Gaurav Mishra!</h1>
-{% else %}
+<table class="table table-striped">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Customer Name</th>
+      <th scope="col">E-mail Address</th>
+      <th scope="col">Contact No.</th>
+      <th scope="col">Address</th>
+      <th scope="col">City</th>
+      <th scope="col">State</th>
+      <th scope="col">Zipcode</th>
+      <th scope="col">Created at</th>
+    </tr>
+  </thead>
 
+<tbody>
+{% if records %}
+  {% for record in records%}
+    <tr>
+      <th scope="row"><a href="{% url 'record' record.id %}" style="text-decoration: none;">{{ record.id }}</a></th>
+      <td>{{record.first_name}} {{record.last_name}}</td>
+      <td>{{record.email}}</td>
+      <td>{{record.phone}}</td>
+      <td>{{record.address}}</td>
+      <td>{{record.city}}</td>
+      <td>{{record.state}}</td>
+      <td>{{record.zipcode}}</td>
+      <td>{{record.created_at}}</td>
+    </tr>
+  {% endfor %}
+{% endif %}
+</tbody>
+</table>
+<div style="float : right"><button type="button" class="btn btn-dark"><a href="{% url 'add' %}" style="text-decoration: none; color : inherit;"><Strong>Add Record +</Strong></a></button></div>
+{% else %}
+<div class="col-md-6 offset-md-3">
 <h1>Login</h1>
 <br>
 <form method="POST" action="{% url 'home'%}">
@@ -21,6 +53,7 @@
   <button type="submit" class="btn btn-secondary">Login</button>
   </form>
 </form>
+</div>
 
     </div>
 {% endif %}
